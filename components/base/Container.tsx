@@ -1,5 +1,4 @@
 import R from "@/constants";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import React, { ReactElement } from "react";
 import { StyleProp, View, ViewStyle } from "react-native";
 
@@ -9,17 +8,23 @@ interface ContainerProps {
   withBottomTab?: boolean;
 }
 
-export default function Container({ children, style }: ContainerProps) {
-  const tabBarHeight = useBottomTabBarHeight();
+export default function Container({
+  children,
+  style,
+  withBottomTab,
+}: ContainerProps) {
   return (
     <View
       style={[
         {
           flex: 1,
           backgroundColor: R.colors.backgroundPrimary,
-          paddingTop: R.dimensions.v50,
+          paddingTop: R.dimensions.v16,
         },
-        { paddingBottom: tabBarHeight + 10 },
+        withBottomTab && {
+          paddingBottom: R.dimensions.bottomTabPadding,
+          paddingTop: R.dimensions.v36,
+        },
         style,
       ]}
     >
