@@ -21,6 +21,7 @@ export default {
 
   //alert
   success: "#68D148",
+  partial: "#eb8c34",
   error: "#B53636",
   errorBox: "#F3C4C1",
 
