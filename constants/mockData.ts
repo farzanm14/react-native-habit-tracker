@@ -6,10 +6,7 @@ export const mockHabits: Habit[] = [
     title: "Morning Run",
     description: "Run at least 3 miles every morning",
     target: {
-      name: "Distance",
-      type: "number",
-      unit: "miles",
-      min: 3,
+      hasAmount: false,
     },
     streak: 5,
   },
@@ -18,10 +15,8 @@ export const mockHabits: Habit[] = [
     title: "Read a Book",
     description: "Read for at least 30 minutes daily",
     target: {
-      name: "Time",
-      type: "number",
-      unit: "minutes",
-      min: 30,
+      hasAmount: true,
+      amount: 1, // in hours
     },
     streak: 10,
   },
@@ -30,10 +25,8 @@ export const mockHabits: Habit[] = [
     title: "Meditation",
     description: "Meditate for at least 10 minutes",
     target: {
-      name: "Time",
-      type: "number",
-      unit: "minutes",
-      min: 10,
+      hasAmount: true,
+      amount: 10, // in minutes
     },
     streak: 7,
   },

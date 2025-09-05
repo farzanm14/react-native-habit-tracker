@@ -1,0 +1,49 @@
+import { Target } from "@/store/types";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+
+export type HabitFormik = {
+  title: string;
+  description: string;
+  target: Target;
+};
+
+const defaultTarget: Target = {
+  hasAmount: false,
+  amount: undefined,
+};
+
+export default function useHabitForm(submitForm: () => void) {
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+      description: "",
+      target: defaultTarget,
+    },
+    validateOnChange: true,
+    validateOnMount: true,
+    validationSchema: HabitSchema,
+    onSubmit: async (values) => {
+      try {
+        submitForm();
+      } catch (error: any) {}
+    },
+  });
+
+  // Custom handleBlur to validate field on blur
+  const handleBlur = (field: keyof HabitFormik) => () => {
+    formik.setFieldTouched(field, true);
+    formik.validateField(field);
+  };
+
+  return { formik, handleBlur };
+}
+
+export const HabitSchema = Yup.object({
+  title: Yup.string()
+    .min(2, "title should be at least 2 characters")
+    .required("title is required"),
+  description: Yup.string()
+    .min(10, "description should be 10 character at least")
+    .notRequired(),
+});
