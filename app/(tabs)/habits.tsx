@@ -15,6 +15,17 @@ export default function HabitListScreen() {
       <MyText variant="title" style={styles.header}>
         Your Habits
       </MyText>
+
+      <MyText variant="subtitle" style={styles.date}>
+        {
+          //todays date in format "Monday, 20 March"
+          new Date().toLocaleDateString("en-US", {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+          })
+        }
+      </MyText>
       <HabitsList />
       <Fab onPress={navigateToAddHabit} icon="plus" />
     </Container>
@@ -26,5 +37,10 @@ const styles = StyleSheet.create({
   header: {
     alignSelf: "center",
     marginTop: R.dimensions.v10,
+  },
+  date: {
+    alignSelf: "center",
+    marginVertical: R.dimensions.v10,
+    color: R.colors.primaryDark,
   },
 });

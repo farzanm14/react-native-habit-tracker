@@ -3,45 +3,41 @@ import dayjs from "dayjs";
 
 export function updateRecord(habit: Habit) {
   const today = dayjs().format("YYYY-MM-DD");
-
   let updatedRecords = habit.records ? [...habit.records] : [];
-
-  // find today's record
   const todayIndex = updatedRecords.findIndex((r) => r.date === today);
 
-  if (habit.target?.hasAmount) {
-    // quantitative habit
+  if (habit.target) {
+    // Quantitative habit
+    let newValue = 1;
     if (todayIndex !== -1) {
-      // increment existing record
-      const prev = (updatedRecords[todayIndex].value as number) || 0;
-      updatedRecords[todayIndex] = {
-        ...updatedRecords[todayIndex],
-        value: Math.min(prev + 1, habit.target.amount ?? prev + 1),
-        status: "partial",
-      };
-      if (updatedRecords[todayIndex].value === habit.target.amount) {
-        updatedRecords[todayIndex].status = "done";
-      }
+      newValue = Math.min(
+        ((updatedRecords[todayIndex].value as number) || 0) + 1,
+        habit.target
+      );
+      updatedRecords[todayIndex].value = newValue;
     } else {
-      // create new record for today
-      updatedRecords.push({
-        date: today,
-        value: 1,
-        status:
-          habit.target.amount && habit.target.amount === 1 ? "done" : "partial",
-      });
+      updatedRecords.push({ date: today, value: 1, status: "partial" });
+    }
+    // Update status
+    const record =
+      updatedRecords[
+        todayIndex !== -1 ? todayIndex : updatedRecords.length - 1
+      ];
+    if (record.value === habit.target) {
+      record.status = "done";
+    } else if ((record.value as number) < habit.target) {
+      record.status = "partial";
+    } else {
+      record.status = "none";
     }
   } else {
-    // boolean habit
+    // Boolean habit
+
     if (todayIndex !== -1) {
-      // toggle between done and not_done
-      const currentStatus = updatedRecords[todayIndex].status;
-      updatedRecords[todayIndex] = {
-        ...updatedRecords[todayIndex],
-        status: currentStatus === "done" ? "none" : "done",
-        value: currentStatus === "done" ? false : true,
-      };
+      // If checked, uncheck (remove record)
+      updatedRecords.splice(todayIndex, 1);
     } else {
+      // If unchecked, check (add record)
       updatedRecords.push({
         date: today,
         status: "done",
@@ -50,10 +46,19 @@ export function updateRecord(habit: Habit) {
     }
   }
 
-  const newHabitValue: Habit = {
+  return {
     ...habit,
     records: updatedRecords,
   };
+}
 
-  return newHabitValue;
+// given a habit and a date in format "YYYY-MM-DD" to this func to returns the record of that date, or null if not found
+export function getRecordByDate(habit: Habit, date: string) {
+  if (!habit.records) return null;
+  const record = habit.records.find((r) => r.date === date);
+  return record || null;
+}
+
+export function getTodayRecord(habit: Habit) {
+  return getRecordByDate(habit, dayjs().format("YYYY-MM-DD"));
 }

@@ -3,8 +3,9 @@ import Checkbox from "@/components/base/CheckBox";
 import Counter from "@/components/base/Counter";
 import MyText from "@/components/base/Text";
 import R from "@/constants";
+import { getTodayRecord } from "@/hooks/useRecords";
 import { Habit } from "@/store/types";
-import React from "react";
+import React, { useMemo } from "react";
 import { StyleSheet } from "react-native";
 
 interface HabitItemProps {
@@ -13,16 +14,22 @@ interface HabitItemProps {
 }
 
 export default function HabitItem({ habit, updateRecord }: HabitItemProps) {
+  //used memoization concept to avoid re-rendering if todaysRecord doesn't change and update it on change of habit.records
+  const todaysRecord = useMemo(() => getTodayRecord(habit), [habit]);
+
   return (
     <Card style={styles.card}>
       <MyText style={styles.habitName}>{habit.title}</MyText>
-      {!habit?.target?.hasAmount ? (
-        <Checkbox checked={true} onChange={() => updateRecord()} />
-      ) : (
+      {habit?.target ? (
         <Counter
-          target={habit?.target?.amount ?? 1}
-          record={0}
-          onChange={() => {}}
+          target={habit?.target ?? 1}
+          record={(todaysRecord?.value as number) ?? 0}
+          onChange={updateRecord}
+        />
+      ) : (
+        <Checkbox
+          checked={(todaysRecord?.value as boolean) ?? false}
+          onChange={updateRecord}
         />
       )}
     </Card>

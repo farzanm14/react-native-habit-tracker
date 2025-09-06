@@ -1,8 +1,3 @@
-export type Target = {
-  hasAmount: boolean;
-  amount?: number; //count or duration in minutes
-};
-
 export type RecordStatus = "done" | "none" | "partial";
 export type DailyRecord = {
   date: string;
@@ -14,7 +9,7 @@ export type Habit = {
   id: string;
   title: string;
   description?: string;
-  target?: Target;
+  target?: number;
   streak?: number;
   records?: DailyRecord[];
 };

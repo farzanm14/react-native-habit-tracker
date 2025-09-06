@@ -1,16 +1,10 @@
-import { Target } from "@/store/types";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
 export type HabitFormik = {
   title: string;
   description: string;
-  target: Target;
-};
-
-const defaultTarget: Target = {
-  hasAmount: false,
-  amount: undefined,
+  target?: number;
 };
 
 export default function useHabitForm(submitForm: () => void) {
@@ -18,7 +12,6 @@ export default function useHabitForm(submitForm: () => void) {
     initialValues: {
       title: "",
       description: "",
-      target: defaultTarget,
     },
     validateOnChange: true,
     validateOnMount: true,
