@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
   },
   emptyListText: {
     textAlign: "center",
+    color: R.colors.textSubtitle,
   },
   emptyListTextContainer: {
     width: "100%",

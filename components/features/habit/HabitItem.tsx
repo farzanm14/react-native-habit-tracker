@@ -6,7 +6,7 @@ import R from "@/constants";
 import { getTodayRecord } from "@/hooks/useRecords";
 import { Habit } from "@/store/types";
 import React, { useMemo } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 interface HabitItemProps {
   habit: Habit;
@@ -19,7 +19,14 @@ export default function HabitItem({ habit, updateRecord }: HabitItemProps) {
 
   return (
     <Card style={styles.card}>
-      <MyText style={styles.habitName}>{habit.title}</MyText>
+      <View>
+        <MyText style={styles.habitName}>{habit.title}</MyText>
+        {habit?.description && (
+          <MyText variant="subtitle" style={styles.habitDescription}>
+            {habit?.description}
+          </MyText>
+        )}
+      </View>
       {habit?.target ? (
         <Counter
           target={habit?.target ?? 1}
@@ -42,4 +49,5 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   habitName: { color: R.colors.primary },
+  habitDescription: { color: R.colors.primaryDark },
 });

@@ -12,6 +12,7 @@ export default function useHabitForm(submitForm: () => void) {
     initialValues: {
       title: "",
       description: "",
+      target: 0,
     },
     validateOnChange: true,
     validateOnMount: true,
@@ -36,7 +37,5 @@ export const HabitSchema = Yup.object({
   title: Yup.string()
     .min(2, "title should be at least 2 characters")
     .required("title is required"),
-  description: Yup.string()
-    .min(10, "description should be 10 character at least")
-    .notRequired(),
+  description: Yup.string().notRequired(),
 });

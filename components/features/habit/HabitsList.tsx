@@ -23,6 +23,7 @@ export default function HabitsList() {
         renderItem={({ item }) => renderNotifItem(item)}
         keyExtractor={(item) => item.id}
         data={habits}
+        emptyListMessage={`No habits found. \n Add a new habit to get started! `}
         style={styles.list}
       />
     </View>

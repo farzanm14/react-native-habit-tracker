@@ -47,6 +47,9 @@ export default function AddOrUpdateHabitForm({
           value={hasTarget}
           onValueChange={() => {
             setHasTarget(!hasTarget);
+            if (hasTarget) {
+              formik.setFieldValue("target", undefined); // reset target when disabling
+            }
           }}
         />
         {hasTarget && (

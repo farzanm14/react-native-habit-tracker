@@ -19,7 +19,7 @@ const MySwitch: React.FC<MyButtonProps> = ({
 }) => {
   return (
     <View style={[styles.container, style]}>
-      label && (<MyText style={styles.label}>{label}</MyText>)
+      {label && <MyText style={styles.label}>{label}</MyText>}
       <Switch {...rest} value={value} onValueChange={onValueChange} />
     </View>
   );

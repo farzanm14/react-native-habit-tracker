@@ -1,4 +1,3 @@
-import { mockHabits } from "@/constants/mockData";
 import createSelectors from "@/store/createSelectors";
 import { Habit } from "@/store/types";
 import { create } from "zustand";
@@ -14,7 +13,7 @@ type HabitStoreActions = {
 };
 
 const initialStoreValue: HabitStoreState = {
-  habits: mockHabits,
+  habits: [],
 };
 
 export const useHabitStoreBase = create<HabitStoreState & HabitStoreActions>()(
