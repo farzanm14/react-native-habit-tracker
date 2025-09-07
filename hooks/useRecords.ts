@@ -1,10 +1,31 @@
 import { Habit } from "@/store/types";
 import dayjs from "dayjs";
 
+export function calculateStreak(records: Habit["records"]) {
+  if (!records || records.length === 0) return 0;
+  // Sort records by date descending
+  const sorted = [...records]
+    .filter((r) => r.status === "done")
+    .sort((a, b) => b.date.localeCompare(a.date));
+  let streak = 0;
+  let currentDate = dayjs().format("YYYY-MM-DD");
+
+  for (let i = 0; i < sorted.length; i++) {
+    if (sorted[i].date === currentDate) {
+      streak++;
+      currentDate = dayjs(currentDate).subtract(1, "day").format("YYYY-MM-DD");
+    } else {
+      break;
+    }
+  }
+  return streak;
+}
+
 export function updateRecord(habit: Habit) {
   const today = dayjs().format("YYYY-MM-DD");
   let updatedRecords = habit.records ? [...habit.records] : [];
   const todayIndex = updatedRecords.findIndex((r) => r.date === today);
+  let updatedStreak = habit?.streak ?? 0;
 
   if (habit.target) {
     // Quantitative habit
@@ -14,7 +35,11 @@ export function updateRecord(habit: Habit) {
         ((updatedRecords[todayIndex].value as number) || 0) + 1,
         habit.target
       );
-      updatedRecords[todayIndex].value = newValue;
+      // Replace the record with a new object
+      updatedRecords[todayIndex] = {
+        ...updatedRecords[todayIndex],
+        value: newValue,
+      };
     } else {
       updatedRecords.push({ date: today, value: 1, status: "partial" });
     }
@@ -25,6 +50,7 @@ export function updateRecord(habit: Habit) {
       ];
     if (record.value === habit.target) {
       record.status = "done";
+      updatedStreak = updatedStreak + 1; // Update streak cause today's record is 'done'
     } else if ((record.value as number) < habit.target) {
       record.status = "partial";
     } else {
@@ -32,10 +58,10 @@ export function updateRecord(habit: Habit) {
     }
   } else {
     // Boolean habit
-
     if (todayIndex !== -1) {
       // If checked, uncheck (remove record)
       updatedRecords.splice(todayIndex, 1);
+      updatedStreak = updatedStreak - 1; //remove today's streak cause unchecked
     } else {
       // If unchecked, check (add record)
       updatedRecords.push({
@@ -43,12 +69,14 @@ export function updateRecord(habit: Habit) {
         status: "done",
         value: true,
       });
+      updatedStreak = updatedStreak + 1; // Update streak cause today's record is 'done'
     }
   }
 
   return {
     ...habit,
     records: updatedRecords,
+    streak: updatedStreak,
   };
 }
 

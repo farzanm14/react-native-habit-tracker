@@ -1,3 +1,4 @@
+import { calculateStreak } from "@/hooks/useRecords";
 import storageService from "@/services/storageService";
 import useHabitStore from "@/store/habitStore";
 import { Habit } from "@/store/types";
@@ -14,6 +15,10 @@ export function usePersistedHabits() {
     const loadHabits = async () => {
       const savedHabits = await storageService.getItem<Habit[]>(HABITS_KEY);
       if (savedHabits && savedHabits.length > 0) {
+        // calculate Streak of today for each habit
+        savedHabits.forEach((habit) => {
+          habit.streak = calculateStreak(habit.records);
+        });
         useHabitStore.setState({ habits: savedHabits });
       }
     };
