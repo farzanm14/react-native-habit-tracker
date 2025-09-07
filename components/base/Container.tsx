@@ -20,6 +20,7 @@ export default function Container({
           flex: 1,
           backgroundColor: R.colors.backgroundPrimary,
           paddingTop: R.dimensions.v16,
+          paddingBottom: R.dimensions.v20,
         },
         withBottomTab && {
           paddingBottom: R.dimensions.bottomTabPadding,

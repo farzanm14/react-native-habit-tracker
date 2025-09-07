@@ -37,7 +37,7 @@ export default function AddNewHabitScreen() {
   }, [navigation]);
 
   return (
-    <Container withBottomTab>
+    <Container>
       <AddOrUpdateHabitForm
         formik={formik}
         handleBlur={handleBlur}

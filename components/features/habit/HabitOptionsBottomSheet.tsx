@@ -37,6 +37,7 @@ const HabitOptionsBottomSheet = ({
         <OptionItem
           onPress={() => {
             router.push(`/habit/${selectedHabit?.id}`);
+            onClose();
           }}
           label="Review All Records"
           icon="eye"
@@ -45,6 +46,7 @@ const HabitOptionsBottomSheet = ({
         <OptionItem
           onPress={() => {
             router.push(`/habit/${selectedHabit?.id}/edit`);
+            onClose();
           }}
           label="Edit Habit"
           icon="pencil"

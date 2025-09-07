@@ -4,21 +4,34 @@ import MySwitch from "@/components/base/Switch";
 import R from "@/constants";
 import { HabitFormik } from "@/hooks/useHabitForm";
 import { FormikProps } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 type Props = {
   formik: FormikProps<HabitFormik>;
   handleBlur: (field: keyof HabitFormik) => () => void;
   submitLabel?: string;
+  initialValues?: HabitFormik;
 };
 
 export default function AddOrUpdateHabitForm({
   formik,
   handleBlur,
   submitLabel = "submit",
+  initialValues,
 }: Props) {
   const [hasTarget, setHasTarget] = useState(false);
+  useEffect(() => {
+    if (initialValues) {
+      formik.setFieldValue("title", initialValues.title);
+      formik.setFieldValue("description", initialValues.description);
+      if (initialValues.target) {
+        setHasTarget(true);
+        formik.setFieldValue("target", initialValues.target);
+      }
+    }
+    return () => {};
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.inputsContainer}>
@@ -62,6 +75,7 @@ export default function AddOrUpdateHabitForm({
             }
             placeholder="Enter your target amount, e.g., 10 times or 1 hour"
             keyboardType="numeric"
+            error={formik.touched.target ? formik.errors.target : ""}
           />
         )}
       </View>

@@ -38,4 +38,5 @@ export const HabitSchema = Yup.object({
     .min(2, "title should be at least 2 characters")
     .required("title is required"),
   description: Yup.string().notRequired(),
+  target: Yup.number().typeError("Target must be a number").notRequired(),
 });
