@@ -1,14 +1,19 @@
 import R from "@/constants";
 import React from "react";
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { Pressable, StyleProp, StyleSheet, ViewStyle } from "react-native";
 
 interface CardProps {
   children: React.ReactNode;
   style?: StyleProp<ViewStyle>;
+  onPress?: () => void;
 }
 
-export default function Card({ children, style }: CardProps) {
-  return <View style={[styles.card, style]}>{children}</View>;
+export default function Card({ children, style, onPress }: CardProps) {
+  return (
+    <Pressable onPress={onPress} style={[styles.card, style]}>
+      {children}
+    </Pressable>
+  );
 }
 
 const styles = StyleSheet.create({

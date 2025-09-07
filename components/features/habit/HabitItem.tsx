@@ -11,14 +11,19 @@ import { StyleSheet, View } from "react-native";
 interface HabitItemProps {
   habit: Habit;
   updateRecord: () => void;
+  onPress: () => void;
 }
 
-export default function HabitItem({ habit, updateRecord }: HabitItemProps) {
+export default function HabitItem({
+  habit,
+  updateRecord,
+  onPress,
+}: HabitItemProps) {
   //used memoization concept to avoid re-rendering if todaysRecord doesn't change and update it on change of habit.records
   const todaysRecord = useMemo(() => getTodayRecord(habit), [habit]);
 
   return (
-    <Card style={styles.card}>
+    <Card style={styles.card} onPress={onPress}>
       <View>
         <MyText style={styles.habitName}>{habit.title}</MyText>
         {habit?.description && (

@@ -6,7 +6,11 @@ import { Habit } from "@/store/types";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
-export default function HabitsList() {
+type ListProps = {
+  onHabitPress: () => void;
+};
+
+export default function HabitsList({ onHabitPress }: ListProps) {
   const { habits, updateHabit } = useHabitStore();
 
   function handleChangeRecord(habit: Habit) {
@@ -14,8 +18,17 @@ export default function HabitsList() {
     updateHabit(updated);
   }
 
+  function showHabitOptions(habit: Habit) {
+    useHabitStore.setState({ selectedHabit: habit });
+    onHabitPress();
+  }
+
   const renderNotifItem = (item: Habit) => (
-    <HabitItem habit={item} updateRecord={() => handleChangeRecord(item)} />
+    <HabitItem
+      onPress={() => showHabitOptions(item)}
+      habit={item}
+      updateRecord={() => handleChangeRecord(item)}
+    />
   );
   return (
     <View style={styles.container}>

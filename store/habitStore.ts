@@ -5,11 +5,13 @@ import { immer } from "zustand/middleware/immer";
 
 interface HabitStoreState {
   habits: Habit[];
+  selectedHabit?: Habit;
 }
 
 type HabitStoreActions = {
   updateHabit: (updatedHabit: Habit) => void;
   addHabit: (newHabit: Habit) => void;
+  deleteSelectedHabit: () => void;
 };
 
 const initialStoreValue: HabitStoreState = {
@@ -31,6 +33,15 @@ export const useHabitStoreBase = create<HabitStoreState & HabitStoreActions>()(
     addHabit: (newHabit: Habit) =>
       set((state) => {
         state.habits.push(newHabit);
+      }),
+    deleteSelectedHabit: () =>
+      set((state) => {
+        if (state.selectedHabit) {
+          state.habits = state.habits.filter(
+            (h: Habit) => h.id !== state.selectedHabit?.id
+          );
+          state.selectedHabit = undefined;
+        }
       }),
   }))
 );
