@@ -1,6 +1,6 @@
 import R from "@/constants";
 import React, { ReactElement } from "react";
-import { StyleProp, View, ViewStyle } from "react-native";
+import { Platform, StyleProp, View, ViewStyle } from "react-native";
 
 interface ContainerProps {
   children?: ReactElement[] | ReactElement;
@@ -20,7 +20,8 @@ export default function Container({
           flex: 1,
           backgroundColor: R.colors.backgroundPrimary,
           paddingTop: R.dimensions.v16,
-          paddingBottom: R.dimensions.v20,
+          paddingBottom:
+            Platform.OS === "ios" ? R.dimensions.v20 : R.dimensions.v50,
         },
         withBottomTab && {
           paddingBottom: R.dimensions.bottomTabPadding,
