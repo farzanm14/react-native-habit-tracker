@@ -11,10 +11,12 @@ export default function EditHabitScreen() {
   const navigation = useNavigation();
   const { id } = useLocalSearchParams();
   const { selectedHabit, updateHabit } = useHabitStore();
+
   const { formik, handleBlur } = useHabitForm(() => {
     const { title, description, target } = formik.values;
 
     const newHabit: Habit = {
+      ...selectedHabit,
       id: id as string,
       title,
       description,
@@ -22,8 +24,6 @@ export default function EditHabitScreen() {
         typeof target === "number" && !Number.isNaN(target)
           ? target
           : undefined,
-      streak: 0,
-      records: [],
     };
 
     updateHabit(newHabit);
