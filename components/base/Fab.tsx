@@ -3,6 +3,7 @@ import R from "@/constants";
 import Octicons from "@expo/vector-icons/Octicons";
 import { ReactNode } from "react";
 import {
+  Platform,
   StyleProp,
   StyleSheet,
   TouchableOpacity,
@@ -53,7 +54,10 @@ const styles = StyleSheet.create({
   fabButton: {
     position: "absolute",
     right: R.dimensions.h16,
-    bottom: R.dimensions.h16 + R.dimensions.bottomTabHeight,
+    bottom:
+      Platform.OS === "ios"
+        ? R.dimensions.v16 + R.dimensions.bottomTabHeight
+        : R.dimensions.v16,
     minHeight: R.dimensions.h56,
     minWidth: R.dimensions.h56,
 

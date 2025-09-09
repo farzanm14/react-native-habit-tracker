@@ -61,13 +61,14 @@ export default function HabitCalendarScreen() {
           {selectedHabit?.description}
         </MyText>
         <MyText variant="title" style={styles.streak}>
-          Streak: {selectedHabit?.streak} days
+          Streak: {selectedHabit?.streak ?? 0} days
         </MyText>
       </View>
       <View style={styles.calendarContainer}>
         <Calendar
           current={currentMonth + "-01"}
           markingType="custom"
+          maxDate={dayjs().format("YYYY-MM-DD")}
           markedDates={markedDates}
           onMonthChange={(month) =>
             setCurrentMonth(month.dateString.slice(0, 7))
