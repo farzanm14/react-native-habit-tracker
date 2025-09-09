@@ -1,6 +1,7 @@
 import Container from "@/components/base/Container";
 import AddOrUpdateHabitForm from "@/components/features/habit/HabitForm";
 import useHabitForm, { HabitFormik } from "@/hooks/useHabitForm";
+import { updateRecordOnEditTarget } from "@/hooks/useRecords";
 import useHabitStore from "@/store/habitStore";
 import { Habit } from "@/store/types";
 import { useNavigation } from "expo-router";
@@ -14,9 +15,11 @@ export default function EditHabitScreen() {
 
   const { formik, handleBlur } = useHabitForm(() => {
     const { title, description, target } = formik.values;
+    const newRecordAndStreak = selectedHabit
+      ? updateRecordOnEditTarget(selectedHabit, target)
+      : { records: [], streak: 0 };
 
     const newHabit: Habit = {
-      ...selectedHabit,
       id: id as string,
       title,
       description,
@@ -24,6 +27,7 @@ export default function EditHabitScreen() {
         typeof target === "number" && !Number.isNaN(target)
           ? target
           : undefined,
+      ...newRecordAndStreak,
     };
 
     updateHabit(newHabit);
