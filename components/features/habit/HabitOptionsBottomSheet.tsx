@@ -55,7 +55,11 @@ const HabitOptionsBottomSheet = ({
         {isDeletingHabit ? (
           <OptionItem style={styles.confirmContainer}>
             <MyText variant="subtitle">
-              Are you sure you want to delete this habit?
+              Are you sure you want to delete
+              <MyText variant="subtitle" style={styles.selectedTitle}>
+                {` ${selectedHabit?.title} `}
+              </MyText>
+              ?
             </MyText>
             <View style={styles.buttonContainer}>
               <MyText
@@ -111,6 +115,10 @@ const styles = StyleSheet.create({
   },
   deleteBtn: {
     color: R.colors.error,
+  },
+  selectedTitle: {
+    color: R.colors.primary,
+    fontWeight: "bold",
   },
 });
 
