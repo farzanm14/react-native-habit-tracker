@@ -5,7 +5,12 @@ import R from "@/constants";
 import { HabitFormik } from "@/hooks/useHabitForm";
 import { FormikProps } from "formik";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import {
+  Keyboard,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 
 type Props = {
   formik: FormikProps<HabitFormik>;
@@ -33,54 +38,56 @@ export default function AddOrUpdateHabitForm({
     return () => {};
   }, []);
   return (
-    <View style={styles.container}>
-      <View style={styles.inputsContainer}>
-        <Input
-          id="title"
-          label="title"
-          value={formik.values.title}
-          onChangeText={(val: string) => formik.setFieldValue("title", val)}
-          placeholder="Enter the habits title, e.g., Read a book"
-          onBlur={handleBlur("title")}
-          error={formik.touched.title ? formik.errors.title : ""}
-        />
-        <Input
-          id="description"
-          label="Description"
-          value={formik.values.description}
-          onChangeText={(val: string) =>
-            formik.setFieldValue("description", val)
-          }
-          placeholder="Enter the habits description, e.g., tack a shower"
-          error={formik.touched.description ? formik.errors.description : ""}
-          onBlur={handleBlur("description")}
-        />
-        <MySwitch
-          label="Set Target Amount"
-          value={hasTarget}
-          onValueChange={() => {
-            setHasTarget(!hasTarget);
-            if (hasTarget) {
-              formik.setFieldValue("target", undefined); // reset target when disabling
-            }
-          }}
-        />
-        {hasTarget && (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={styles.container}>
+        <View style={styles.inputsContainer}>
           <Input
-            id="targetAmount"
-            label="Target Amount"
-            value={formik.values?.target?.toString() || ""}
-            onChangeText={(val: string) =>
-              formik.setFieldValue("target", Number(val))
-            }
-            placeholder="Enter your target amount, e.g., 10 times or 1 hour"
-            keyboardType="numeric"
-            error={formik.touched.target ? formik.errors.target : ""}
+            id="title"
+            label="title"
+            value={formik.values.title}
+            onChangeText={(val: string) => formik.setFieldValue("title", val)}
+            placeholder="Enter the habits title, e.g., Read a book"
+            onBlur={handleBlur("title")}
+            error={formik.touched.title ? formik.errors.title : ""}
           />
-        )}
+          <Input
+            id="description"
+            label="Description"
+            value={formik.values.description}
+            onChangeText={(val: string) =>
+              formik.setFieldValue("description", val)
+            }
+            placeholder="Enter the habits description, e.g., tack a shower"
+            error={formik.touched.description ? formik.errors.description : ""}
+            onBlur={handleBlur("description")}
+          />
+          <MySwitch
+            label="Set Target Amount"
+            value={hasTarget}
+            onValueChange={() => {
+              setHasTarget(!hasTarget);
+              if (hasTarget) {
+                formik.setFieldValue("target", undefined); // reset target when disabling
+              }
+            }}
+          />
+          {hasTarget && (
+            <Input
+              id="targetAmount"
+              label="Target Amount"
+              value={formik.values?.target?.toString() || ""}
+              onChangeText={(val: string) =>
+                formik.setFieldValue("target", Number(val))
+              }
+              placeholder="Enter your target amount, e.g., 10 times or 1 hour"
+              keyboardType="numeric"
+              error={formik.touched.target ? formik.errors.target : ""}
+            />
+          )}
+        </View>
+        <MyButton title={submitLabel} onPress={() => formik.handleSubmit()} />
       </View>
-      <MyButton title={submitLabel} onPress={() => formik.handleSubmit()} />
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
