@@ -1,21 +1,22 @@
-# Habit Tracker App
+# 📱 Habit Tracker App
 
 Track your habits, build streaks, and gain insights that help you stay consistent.
 
-<img style="height: 400px;" src="./docs/images/intro.png">
-<div style="width:100%; display:flex; justify-content: center; ">
+![screens](./docs/images/intro.png)
+
+<div style="width:100%; display:flex; justify-content: center;">
 <img style="height: 600px;" src="./docs/demo.gif">
 </div>
 
-## Features
+## ✨ Features
 
-- Habit creation with custom target
-- Editable default habits
-- Streaks and progress tracking
-- Calendar view of records (completed marked days, current streak)
-- Offline support
+- ➕ Habit creation with custom target
+- ✏️ Edit or remove default and custom habits
+- 📈 Streaks and progress tracking
+- 🗓 Calendar view of records (completed marked days, current streak)
+- 💾 Offline support
 
-## Tools and Libraries
+## 🛠 Tools and Libraries
 
 | Library / Tool                                | Feature / Duty / Advantage                                         |
 | --------------------------------------------- | ------------------------------------------------------------------ |
@@ -33,17 +34,17 @@ Track your habits, build streaks, and gain insights that help you stay consisten
 | **eslint**                                    | Code linting to ensure consistent style and quality.               |
 | **typescript**                                | TypeScript support for type safety and better DX.                  |
 
-## Decisions Notes
+## 🧠 Decision Notes
 
-- Stored constant variables in separate files in order to prevent using hard code values in result easy to update.
-- Implemented base components that can be reused across different screens.(Prevent write more than one)
-- Used Expo router for navigation.(File base routing & less boiler plate)
-- Used AsyncStorage to save updates and reload previous data.
-  Developed custom hook which loads stored data to stateManger store, save updates on data when app goes to background.
-  Default habits load once, only in first launch, user can remove or edit them. Any changes will remain on next launch.First launch status save as a flag in storage.
-- Used bottom-sheet as modern modal to show options. While most of users work one handed with mobile, bottom-sheet helps to choose options easily.
+- 🔧 Stored constant variables in separate files in order to prevent using hard code values in result easy to update.
+- ♻️ Implemented base components that can be reused across different screens.(Prevent write more than once)
+- 🛣 Used Expo router for navigation.(File base routing & less boilerplate)
+- 💾 Used AsyncStorage to save updates and reload previous data.
+  Developed custom hook which loads stored data on stateMangers store, save updates of data when app goes to background.
+  Default habits load once, only in first launch, user can remove or edit them. Any changes will remain on next launch. (First launch status save as a flag in storage.)
+- 📱 Used bottom-sheet as modern modal to show options. While most of users work one handed with mobile, bottom-sheet helps to choose options easily.
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
@@ -53,13 +54,21 @@ Track your habits, build streaks, and gain insights that help you stay consisten
 
 ### Installation
 
-- Clone repository: git clone https://github.com/farzanm14/react-native-habit-tracker.git
-- Change directory: cd react-native-habit-tracker
-- Install dependencies: yarn
+```bash
+# Clone repository
+git clone https://github.com/farzanm14/react-native-habit-tracker.git
+
+# Enter project
+cd react-native-habit-tracker
+
+# Install dependencies
+yarn install
+
+```
 
 ### Run Locally
 
-1.  Start dev server: npx expo start
+1.  Start dev server: `npx expo start`
 
 2.  Open the app on your device or emulator.
 
@@ -70,19 +79,27 @@ Track your habits, build streaks, and gain insights that help you stay consisten
 
     2-2. Scan QrCode with your phone.(Note: install Expo Go app before scan)
 
+## 📌 Roadmap
+
+- 🔔 Push notifications & scheduled reminders
+- 🌙 Dark mode support
+- 📤 Export / share progress images or text
+- 📊 Advanced analytics (weekly / monthly trends)
+
 ## Demo
 
 <details open="close">
 <summary>Screenshots Of Each Screen in iOS & Android Environment </summary>
 
-- Dashboard: [./docs/images/dashboard.png]
-- Habits: [./docs/images/habits.png]
-- Calendar: [./docs/images/calendar.png]
-- Habit Options: [./docs/images/options.png]
-- Create Habit: [./docs/images/add.png]
-- Edit Habit: [./docs/images/edit.png]
-- Delete Habit: [./docs/images/delete.png]
-- Empty States: [./docs/images/empty-state.png]
+- [Dashboard](/docs/images/dashboard.png)
+- [Habits](/docs/images/habits.png)
+- [Calendar](/docs/images/calendar.png)
+- [Habit Options](/docs/images/options.png)
+- [Create Habit](/docs/images/add.png)
+- [Edit Habit](/docs/images/edit.png)
+- [Delete Habit](/docs/images/delete.png)
+- [Empty States](/docs/images/empty-state.png)
+
 </details>
 
 ---
